@@ -3,6 +3,8 @@
 # Inferencia bayesiana recursiva para el caso en el que el estado del mundo es 
 # dinámico y discreto (en particular, binario). 
 
+# Esta es una implementacion del ejemplo del libro "Bayesian perception: an 
+#introduction" por Wei Ji Ma, Konrad Kording y Daniel Goldreich. 
 # En este ejemplo se el sujeto trata de determinar si un animal, que ve a lo 
 # lejos, se está moviendo a izquierda (I) o a derecha (D).
 
@@ -20,30 +22,20 @@
 
 # Consideramos la cantidad de pasos temporales:
 
-N = 8
+N = 6
 
 # Definimos la matriz que representa la dinamica del sistema
 M = matrix(c(0.8, 0.2, 0.2, 0.8), nrow = 2, ncol = 2)
 
 # Generamos las observaciones del individuo: 0 representa a la izquierda 
 # y 1 a la derecha.
-obs = rep(NaN, N)
-obs[1] = rbinom(1, 1, 0.5)
-for (i in 2:N){
-  if (obs[i-1] == 0){
-    obs[i] = rbinom(1, 1, 0.2)
-  }
-  else{
-    obs[i] = rbinom(1, 1, 0.8)
-  }
-}
+obs = c(0,0,0,1,1,1)
 observations = ifelse(obs == 1, 'D', 'I')
 print(observations)
-# obs = c(0,0,0,1,1,1)
+
 
 # Definimos la matriz de Likelihood
-noise = 0.25
-L = matrix(c(1-noise, noise, noise, 1-noise), nrow = 2, ncol = 2)
+L = matrix(c(0.8, 0.2, 0.2, 0.8), nrow = 2, ncol = 2)
 
 # Inicializamos el vector de probabilidades a priori (que podemos considerar 
 # probabilidades posterior del tiempo 0)
@@ -51,7 +43,7 @@ L = matrix(c(1-noise, noise, noise, 1-noise), nrow = 2, ncol = 2)
 p_post = c(0.5, 0.5)
 
 # Iteramos para cada paso temporal:
-par(pty="s", mfrow=c(2,4))
+par(pty="s", mfrow=c(2,3))
 for (t in 1:N){
   
   # Se aplica la dinámica para tener la probabilidad prior a tiempo t
@@ -63,15 +55,10 @@ for (t in 1:N){
   x = c(0,1)
   y = p_post
   
+  #R Graficamos la probabilidad posterior a tiempo t
+  
   title = paste('Posterior a tiempo', t)
   plot(x, y, type='h', xlim=c(-0.5, 1.5), ylim=c(0,1), lwd=3, xaxt='n', main=title, xlab='', ylab='p', )
   axis(1, at=c(0,1), labels=c('I', 'D'))
   points(x,y,pch=16,cex=2.5,col="red")
-  
-  print('prior:')
-  print(p_before)
-  print('posterior:')
-  print(p_post)
-  print('.')
-  print('.')
 }

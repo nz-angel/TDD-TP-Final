@@ -4,7 +4,7 @@
 # dinámico y discreto (en particular, binario). 
 
 # Esta es una implementacion del ejemplo del libro "Bayesian perception: an 
-#introduction" por Wei Ji Ma, Konrad Kording y Daniel Goldreich. 
+# introduction" por Wei Ji Ma, Konrad Kording y Daniel Goldreich. 
 # En este ejemplo se el sujeto trata de determinar si un animal, que ve a lo 
 # lejos, se está moviendo a izquierda (I) o a derecha (D).
 
@@ -13,7 +13,7 @@
 
 # Se supone que la percepción visual tiene ruido: hay un 20% de probabilidades
 # de observar la dirección contraria a la que el animal realmente se está 
-# moviendo.
+# moviendo. Este ruido es constante en el tiempo.
 
 # Dinámica: en promedio, la dirección cambia cada 5 pasos temporales.
 

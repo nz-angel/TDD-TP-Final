@@ -60,6 +60,24 @@ ui = fluidPage(
   sidebarLayout(
     
     sidebarPanel(
+      p(style="text-align:justify",'Con esta aplicación se simula un ejemplo de 
+      inferencia bayesiana recursiva cuando el estado del mundo es dinámico y 
+      continuo. En el experimento, el sujeto extiende su brazo con los ojos 
+      cerrados e intenta determinar la posición de su mano con respecto a un eje
+      de referencia: una línea imaginaria recta que se extiende desde su hombro 
+      hacia adelante. Se analiza el caso unidimensional, por lo que el sujeto 
+      intenta determinar la altura de su mano con respecto al eje de referencia'),
+      p(style="text-align:justify", 'Se considera que el modelo generativo tiene
+        una dinámica lineal con ruido: ', HTML('s<sub>n+1</sub> = As<sub>n</sub> + &eta;'),
+        'donde ', HTML('<em>s<sub>n</sub></em> es el estado del mundo a tiempo 
+                       n, A es constante y &eta; proviene de una distribución N(0,1).'),
+        'El sujeto conoce la dinámica y la aplica a la creencia posterior del
+        intervalo de tiempo anterior para obtener la prior del tiempo actual.'),
+      p(style="text-align:justify", 'Se supone también que la función de likelihood
+        es gaussiana y que la probabilidad prior tiene distribución normal. A
+        continuación se puede simular trial especificando los intervalos de
+        tiempo, el desvío estándar de la función de likelihood y el coeficiente
+        de la dinámica.'),
 
       sliderInput('tsteps', 'Cantidad de espacios temporales', 
                   value=3,min = 2, max = 10, step = 1),
@@ -134,7 +152,7 @@ server = function(input, output){
     ypost = dnorm(x, post_mu, post_sigma)
     labels = c(paste('Posterior a tiempo ', input$time2-1), 'Prior', 'Likelihood', 'Posterior')
     plot(x, yprev, type='l', ylab='', xlab='', main=paste('t = ', input$time2), bty='L',
-         yaxs = 'i', col = alpha('coral',0.9), lwd=3, lty='dotted', ylim=c(0,1))
+         yaxs = 'i', col = 'coral', lwd=3, lty='dotted', ylim=c(0,1))
     lines(x, yprior, col = 'red', lwd=3)
     lines(x, ylike, col = 'darkolivegreen4', lwd=3)
     lines(x, ypost, col = "dodgerblue3", lwd=3)

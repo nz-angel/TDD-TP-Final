@@ -31,6 +31,7 @@ obs = c(4,6,4)
 
 prev_post_mu = 0
 prev_post_sigma = sqrt(2)
+par(mfrow = c(3,1))
 
 for (i in 1:N){
   
